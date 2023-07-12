@@ -1,4 +1,11 @@
-use actix_web::get;
+use actix_web::{get, HttpResponse};
+
+#[get("/health")]
+async fn health() -> HttpResponse {
+    HttpResponse::Ok()
+        .append_header(("version", "0.0.1"))
+        .finish()
+}
 
 #[get("/")]
 async fn hello_world() -> &'static str {
