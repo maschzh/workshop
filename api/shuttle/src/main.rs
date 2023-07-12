@@ -2,7 +2,7 @@ use actix_web::{web::ServiceConfig};
 use shuttle_actix_web::ShuttleActixWeb;
 use shuttle_runtime::CustomError;
 use sqlx::Executor;
-use api_lib::health::{hello_world, version, health};
+// use api_lib::health::*;
 
 #[shuttle_runtime::main]
 async fn actix_web(

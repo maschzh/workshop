@@ -1,29 +1,30 @@
 use actix_web::{web::{self, ServiceConfig}, HttpResponse};
 
-async fn health() -> HttpResponse {
-    HttpResponse::Ok()
-        .append_header(("version", "0.0.2"))
-        .finish()
-}
+pub const API_VERSION: &str = "v0.0.1";
 
 pub fn service(cfg: &mut ServiceConfig) {
     cfg.route("/health", web::get().to(health));
 }
-
-#[get("/")]
-async fn hello_world() -> &'static str {
-    "Hello World!"
+async fn health() -> HttpResponse {
+    HttpResponse::Ok()
+        .append_header(("version", "v0.0.1"))
+        .finish()
 }
 
-#[get("/version")]
-async fn version(db: actix_web::web::Data<sqlx::PgPool>) -> String {
-    tracing::info!("Getting version");
-    let result: Result<String, sqlx::Error> = sqlx::query_scalar("SELECT version()")
-        .fetch_one(db.get_ref())
-        .await;
+// #[get("/")]
+// async fn hello_world() -> &'static str {
+//     "Hello World!"
+// }
 
-    match result {
-        Ok(version) => version,
-        Err(e) => format!("Error: {:?}", e),
-    }
-}
+// #[get("/version")]
+// async fn version(db: actix_web::web::Data<sqlx::PgPool>) -> String {
+//     tracing::info!("Getting version");
+//     let result: Result<String, sqlx::Error> = sqlx::query_scalar("SELECT version()")
+//         .fetch_one(db.get_ref())
+//         .await;
+
+//     match result {
+//         Ok(version) => version,
+//         Err(e) => format!("Error: {:?}", e),
+//     }
+// }
